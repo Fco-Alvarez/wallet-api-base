@@ -1,40 +1,46 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.3'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.7'
-# Use postgresql as the database for Active Record
-gem 'pg', '~> 1.1'
-# Use Puma as the app server
-gem 'puma', '~> 5.0'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-# gem 'jbuilder', '~> 2.7'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
-# Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 
-# Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
-
-# Reduces boot times through caching; required in config/boot.rb
+gem 'bcrypt', '~> 3.1', '>= 3.1.16'
 gem 'bootsnap', '>= 1.4.4', require: false
-
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'discard', '~> 1.2', '>= 1.2.1'
+gem 'dotenv-rails', '~> 2.7', '>= 2.7.6'
+gem 'jsonapi-serializer', '~> 2.2'
+gem 'jwt', '~> 2.3'
+gem 'pagy', '~> 5.10.1'
+gem 'pg', '~> 1.1'
+gem 'puma', '~> 5.0'
+gem 'rack-cors', '~> 1.1', '>= 1.1.1'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails', '~> 5.1', '>= 5.1.1'
+  gem 'rspec-rails', '~> 5.1', '>= 5.1.2'
 end
 
 group :development do
+  gem 'annotate', '~> 3.2'
+  gem 'brakeman', '~> 5.3', '>= 5.3.1'
   gem 'listen', '~> 3.3'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem 'rails_best_practices', '~> 1.23', '>= 1.23.1'
+  gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'spring', '~> 2.1'
+  gem 'spring-watcher-listen', '~> 2.0.1'
 end
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+group :test do
+  gem 'faker', '~> 2.23'
+  gem 'shoulda-matchers', '~> 5.1'
+  gem 'simplecov', '~> 0.21.2', require: false
+end
+
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

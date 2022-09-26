@@ -1,0 +1,23 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'db/**/*'
+    - 'script/**/*'
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'lib/tasks/auto_annotate_models.rake'
+    # bundled gems
+    - vendor/**/*
+    # testing gems
+    - testing/vendor/**/*
+
+Layout/LineLength:
+  Max: 100
+
+Style/Documentation:
+  Enabled: false
