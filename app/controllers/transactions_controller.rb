@@ -1,4 +1,11 @@
 class TransactionsController < ApplicationController
+  has_scope :by_concept
+  has_scope :by_type
+  has_scope :by_account
+
+  def index
+    @transtactions = pagy(apply_scopes(Transaction.all))
+  end
 
   # POST /transactions
   def create
@@ -12,8 +19,9 @@ class TransactionsController < ApplicationController
   end
 
   private
-    # Only allow a list of trusted parameters through.
-    def transaction_params
-      params.require(:transaction).permit(:amount, :concept, :date, :kind, :account_id, :user_id)
-    end
+
+  # Only allow a list of trusted parameters through.
+  def transaction_params
+    params.require(:transaction).permit(:amount, :concept, :date, :kind, :account_id, :user_id)
+  end
 end
