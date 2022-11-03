@@ -12,6 +12,8 @@
 #  updated_at      :datetime         not null
 #
 class User < ApplicationRecord
+  has_many :transactions
+  has_many :accounts
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: "Invalid email" }
   validates :rol, inclusion: { in: %w(admin regular),
                                message: "%{value} is not a valid rol" }
