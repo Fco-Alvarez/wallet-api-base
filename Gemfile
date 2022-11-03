@@ -11,6 +11,7 @@ gem 'bcrypt', '~> 3.1', '>= 3.1.16'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'discard', '~> 1.2', '>= 1.2.1'
 gem 'dotenv-rails', '~> 2.7', '>= 2.7.6'
+gem 'has_scope'
 gem 'jsonapi-serializer', '~> 2.2'
 gem 'jwt', '~> 2.3'
 gem 'pagy', '~> 5.10.1'
