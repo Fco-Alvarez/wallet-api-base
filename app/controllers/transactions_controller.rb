@@ -4,7 +4,7 @@ class TransactionsController < ApplicationController
   has_scope :by_account
 
   def index
-    @transtactions = pagy(apply_scopes(Transaction.all))
+    @transtactions = apply_scopes(Transaction.all)
   end
 
   # POST /transactions
