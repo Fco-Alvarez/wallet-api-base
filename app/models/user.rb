@@ -12,6 +12,7 @@
 #  updated_at      :datetime         not null
 #
 class User < ApplicationRecord
+  has_secure_password
   has_many :transactions
   has_many :accounts
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: "Invalid email" }
