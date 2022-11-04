@@ -31,7 +31,7 @@ class Transaction < ApplicationRecord
                                 message: "%{value} is not a valid type" }
   validates :account_id, presence: true, ars_currency_account: true, on: :create_from_controller
 
-  scope :by_concept -> concept { where( "concept LIKE ?", "%" + concept + "%" ) }
-  scope :by_type -> kind { where( "kind = ?", kind) }
-  scope :by_account -> account_id { where( "account_id = ?", account_id ) }
+  scope :by_concept, -> concept { where( "concept LIKE ?", "%" + concept + "%" ) }
+  scope :by_type, -> kind { where( "kind = ?", kind) }
+  scope :by_account, -> account_id { where( "account_id = ?", account_id ) }
 end
