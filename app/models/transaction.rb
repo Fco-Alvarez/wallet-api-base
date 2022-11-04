@@ -33,5 +33,5 @@ class Transaction < ApplicationRecord
 
   scope :by_concept -> concept { where( "concept LIKE ?", "%" + concept + "%" ) }
   scope :by_type -> kind { where( "kind = ?", kind) }
-  SCOPE :by_account -> account_id { where( "account_id = ?", account_id ) }
+  scope :by_account -> account_id { where( "account_id = ?", account_id ) }
 end
