@@ -11,6 +11,12 @@ class TransactionsController < ApplicationController
     end
   end
 
+  # GET /transactions/1
+  def show
+    render json: @transaction
+  end
+
+
   private
     # Only allow a list of trusted parameters through.
     def transaction_params
