@@ -38,6 +38,10 @@ RSpec.describe "/transactions", type: :request do
       get transactions_url, headers: valid_headers, as: :json
       expect(response).to be_successful
     end
+
+    it "returns values based on scopes" do
+      
+    end
   end
 
   describe "GET /show" do
