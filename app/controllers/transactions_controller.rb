@@ -20,8 +20,19 @@ class TransactionsController < ApplicationController
 
   # GET /transactions/1
   def show
+    @transaction = Transaction.find(params[:id])
     render json: @transaction
   end
+
+  # PATCH/PUT /transactions/1
+  def update
+    if @transaction.update(transaction_params)
+      render json: @transaction
+    else
+      render json: @transaction.errors, status: :unprocessable_entity
+    end
+  end
+
 
 
   private
