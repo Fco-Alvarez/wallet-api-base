@@ -32,8 +32,7 @@ class TransactionsController < ApplicationController
       render json: @transaction.errors, status: :unprocessable_entity
     end
   end
-
-
+  
 
   private
 
