@@ -2,7 +2,12 @@ class ApplicationController < ActionController::API
   include JsonWebToken
   include Pagy::Backend
 
+  before_action :switch_locale
   before_action :authenticate_request
+
+  def switch_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
 
   def authenticate_request
     header = request.headers['Authorization']
