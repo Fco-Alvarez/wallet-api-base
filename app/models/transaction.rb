@@ -8,7 +8,6 @@ require_relative '../validators/ars_currency_account_validator.rb'
 #  concept    :string
 #  date       :date
 #  kind       :string
-#  type       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  account_id :bigint           not null
