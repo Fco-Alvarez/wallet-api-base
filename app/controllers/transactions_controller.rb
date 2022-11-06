@@ -35,9 +35,9 @@ class TransactionsController < ApplicationController
       render json: @transaction.errors, status: :unprocessable_entity
     end
   end
-  
 
   private
+
   # Only allow a list of trusted parameters through.
   def transaction_params
     params.require(:transaction).permit(:amount, :concept, :date, :kind, :account_id)
