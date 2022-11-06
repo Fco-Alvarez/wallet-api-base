@@ -1,4 +1,5 @@
 require_relative '../validators/ars_currency_account_validator.rb'
+require_relative '../validators/user_account_validator.rb'
 # == Schema Information
 #
 # Table name: transactions
@@ -29,6 +30,7 @@ class Transaction < ApplicationRecord
   validates :kind, inclusion: { in: %w(topup payment),
                                 message: "%{value} is not a valid type" }
   validates :account_id, presence: true, ars_currency_account: true, on: :create_from_controller
+  validates_with UserAccountValidator, on: :create_from_controller
 
   scope :by_concept, -> concept { where( "concept LIKE ?", "%" + concept + "%" ) }
   scope :by_type, -> kind { where( "kind = ?", kind) }
