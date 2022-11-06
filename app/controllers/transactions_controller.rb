@@ -21,6 +21,22 @@ class TransactionsController < ApplicationController
     end
   end
 
+  # GET /transactions/1
+  def show
+    @transaction = Transaction.find(params[:id])
+    render json: @transaction
+  end
+
+  # PATCH/PUT /transactions/1
+  def update
+    if @transaction.update(transaction_params)
+      render json: @transaction
+    else
+      render json: @transaction.errors, status: :unprocessable_entity
+    end
+  end
+  
+
   private
   # Only allow a list of trusted parameters through.
   def transaction_params
