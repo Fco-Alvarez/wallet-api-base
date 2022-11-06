@@ -1,4 +1,5 @@
-class TransactionsController < ApplicationController
+class Api::V1::TransactionsController < ApplicationController
+
   has_scope :by_concept
   has_scope :by_type
   has_scope :by_account

@@ -1,2 +1,0 @@
-class FixedTermDepositsController < ApplicationController
-end
