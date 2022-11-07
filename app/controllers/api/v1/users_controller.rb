@@ -29,7 +29,17 @@ class Api::V1::UsersController < ApplicationController
     head :no_content
   end
 
+  def balance
+    amount = @user.account_balance(currency_param)
+    balance = { currency: currency_param, amount: amount }
+    render json: { balance: balance }
+  end
+
   private
+
+  def currency_param
+    params.permit(:currency)
+  end
 
   def set_user
     @user = User.find(params[:id])
