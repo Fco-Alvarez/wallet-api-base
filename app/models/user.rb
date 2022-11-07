@@ -21,4 +21,17 @@ class User < ApplicationRecord
   validates :rol, inclusion: { in: %w(admin regular),
                                message: "%{value} is not a valid rol" }
   validates :password, presence: true, length: { minimum: 6 }
+  
+  def account_by_currency(currency) 
+    accounts.where("currency = ?", currency).first
+  end
+
+  def account_balance(currency)
+    account = account_by_currency(currency)
+    difference(account.id)
+  end
+
+  def difference(account_id)
+    transactions.by_account(account_id).by_type('topup').sum(:amount) - transactions.by_account(account_id).by_type('payment').sum(:amount)
+  end
 end
