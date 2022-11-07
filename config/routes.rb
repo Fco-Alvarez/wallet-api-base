@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
-  resources :transactions, only: [:index,:create]
-  resource :users, only: [:create]
-  post "/login", to: "users#login"
-  get "/auto_login", to: "users#auto_login"
+  scope '(:locale)', locale: /es|en/ do
+    namespace :api do
+      namespace :v1, defaults: { format: 'json' } do
+        resources :users
+        post '/auth/login', to: 'authentication#login'
+        post '/auth/register',  to: 'authentication#register'
+        resources :transactions, only: %i[index create show]
+      end
+    end
+  end
 end

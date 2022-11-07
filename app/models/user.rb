@@ -12,10 +12,13 @@
 #  updated_at      :datetime         not null
 #
 class User < ApplicationRecord
+  require "securerandom"
   has_secure_password
+
   has_many :transactions
   has_many :accounts
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: "Invalid email" }
   validates :rol, inclusion: { in: %w(admin regular),
                                message: "%{value} is not a valid rol" }
+  validates :password, presence: true, length: { minimum: 6 }
 end
