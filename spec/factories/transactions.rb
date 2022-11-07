@@ -24,8 +24,8 @@
 #
 FactoryBot.define do
   factory :transaction do
-    amount { "9.99" }
-    concept { "MyString" }
+    amount { Faker::Number.decimal(l_digits: 3, r_digits: 2) }
+    concept { Faker::Lorem.word }
     date { "2022-11-02" }
     type { "" }
     account { nil }

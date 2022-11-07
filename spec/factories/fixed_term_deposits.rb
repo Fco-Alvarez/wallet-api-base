@@ -11,7 +11,7 @@
 #
 FactoryBot.define do
   factory :fixed_term_deposit do
-    amount { "9.99" }
+    amount { Faker::Number.decimal(l_digits: 3, r_digits: 2) }
     creation_date { "2022-11-02" }
     closing_date { "2022-11-02" }
   end
