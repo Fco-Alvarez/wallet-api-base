@@ -24,7 +24,6 @@ user3 = User.create(
           rol: ['admin', 'regular'].sample
         )
 
-
 Account.create(
   user: user1,
   currency: 'usd'
@@ -66,6 +65,5 @@ Account.create(
         account: account
       )
     end
-
   end
 end

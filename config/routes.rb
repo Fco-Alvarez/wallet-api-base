@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         post '/auth/login', to: 'authentication#login'
         post '/auth/register',  to: 'authentication#register'
         resources :transactions, only: %i[index create show]
+        resources :accounts, only: %i[index]
       end
     end
   end
