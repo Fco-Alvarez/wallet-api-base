@@ -1,0 +1,2 @@
+class RefundRequestsController < ApplicationController
+end
