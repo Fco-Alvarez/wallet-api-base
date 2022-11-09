@@ -33,6 +33,7 @@ class Transaction < ApplicationRecord
   validates_with UserAccountValidator, on: :create_from_controller
 
   validate :validate_different_user
+  validate :validate_sufficient_balance
 
   scope :by_concept, -> concept { where( "concept LIKE ?", "%" + concept + "%" ) }
   scope :by_type, -> kind { where( "kind = ?", kind) }
@@ -44,7 +45,7 @@ class Transaction < ApplicationRecord
     errors.add(:user_id, 'No se puede enviarse dinero asi mismo.') if user_id == account.user_id
   end
 
-  def validate_custome_title
-    errors.add(:title, 'No es posible usar ese tituto.') if title == 'CodigoFacilito'
+  def validate_sufficient_balance
+    errors.add(:amount, 'Saldo insuficiente.') if account.get_balance < amount
   end
 end
