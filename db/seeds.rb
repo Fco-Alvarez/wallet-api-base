@@ -48,6 +48,7 @@ Account.create(
   user: user3,
   currency: 'usd'
 )
+
 Account.create(
   user: user3,
   currency: 'ars'
@@ -58,7 +59,7 @@ Account.create(
     (6..10).to_a.sample.times do
       Transaction.create(
         kind: 'topup',
-        amount: rand(1000..100000),
+        amount: rand(1000..100_000),
         concept: Faker::Lorem.word,
         date: Faker::Date.birthday(min_age: 0, max_age: 5),
         user: user,
@@ -68,7 +69,7 @@ Account.create(
     (1..4).to_a.sample.times do
       Transaction.create(
         kind: 'payment',
-        amount: rand(1000..10000),
+        amount: rand(1000..10_000),
         concept: Faker::Lorem.word,
         date: Faker::Date.birthday(min_age: 0, max_age: 5),
         user: user,

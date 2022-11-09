@@ -33,6 +33,6 @@ class User < ApplicationRecord
 
   def account_difference(account_id)
     # transactions.by_account(account_id).by_type('topup').sum(:amount) - transactions.by_account(account_id).by_type('payment').sum(:amount)
-    transactions.by_account(account_id).by_type('topup').pluck(:amount).sum - transactions.by_account(account_id).by_type('payment').pluck(:amount).sum
+    accounts.find(account_id).transactions.by_type('topup').pluck(:amount).sum - accounts.find(account_id).transactions.by_type('payment').pluck(:amount).sum
   end
 end
