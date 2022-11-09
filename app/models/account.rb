@@ -20,4 +20,8 @@ class Account < ApplicationRecord
   belongs_to :user
   validates :currency, inclusion: { in: %w(usd ars),
                                     message: "%{value} is not a valid currency" }
+
+  def get_balance
+    self.user.account_difference(self.id)
+  end
 end
