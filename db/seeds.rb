@@ -55,10 +55,20 @@ Account.create(
 
 [user1, user2, user3].each do |user|
   user.accounts.each do |account|
-    (2..6).to_a.sample.times do
+    (6..10).to_a.sample.times do
       Transaction.create(
-        kind: ['topup', 'payment'].sample,
-        amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
+        kind: 'topup',
+        amount: rand(1000..100000),
+        concept: Faker::Lorem.word,
+        date: Faker::Date.birthday(min_age: 0, max_age: 5),
+        user: user,
+        account: account
+      )
+    end
+    (1..4).to_a.sample.times do
+      Transaction.create(
+        kind: 'payment',
+        amount: rand(1000..10000),
         concept: Faker::Lorem.word,
         date: Faker::Date.birthday(min_age: 0, max_age: 5),
         user: user,
