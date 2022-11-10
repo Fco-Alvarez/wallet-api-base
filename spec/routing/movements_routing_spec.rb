@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Api::V1::movementsController, type: :routing do
+RSpec.describe Api::V1::MovementsController, type: :routing do
   describe "Routing movements" do
     it "routes to #index" do
       expect(get: "/api/v1/movements").to route_to(
