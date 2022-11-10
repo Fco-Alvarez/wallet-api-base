@@ -12,7 +12,7 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/movements", type: :request do
+RSpec.describe "movements", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # movement. As you add validations to movement, be sure to
   # adjust the attributes here as well.
@@ -34,7 +34,7 @@ RSpec.describe "/movements", type: :request do
 
   describe "GET /index" do
     it "renders a successful response" do
-      movement.create! valid_attributes
+      movement = movement.create! valid_attributes
       get api_v1_movements_url, headers: valid_headers, as: :json
       expect(response).to be_successful
     end
@@ -58,7 +58,7 @@ RSpec.describe "/movements", type: :request do
         expect {
           post api_v1_movements_url,
                params: { movement: valid_attributes }, headers: valid_headers, as: :json
-        }.to change(movement, :count).by(1)
+        }.to change(Movement, :count).by(1)
       end
 
       it "renders a JSON response with the new movement" do
@@ -74,7 +74,7 @@ RSpec.describe "/movements", type: :request do
         expect {
           post api_v1_movements_url,
                params: { movement: invalid_attributes }, as: :json
-        }.to change(movement, :count).by(0)
+        }.to change(Movement, :count).by(0)
       end
 
       it "renders a JSON response with errors for the new movement" do
@@ -125,7 +125,7 @@ RSpec.describe "/movements", type: :request do
       movement = movement.create! valid_attributes
       expect {
         delete api_v1_movement_url(movement), headers: valid_headers, as: :json
-      }.to change(movement, :count).by(-1)
+      }.to change(Movement, :count).by(-1)
     end
   end
 end
