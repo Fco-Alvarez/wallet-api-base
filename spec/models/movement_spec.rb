@@ -25,5 +25,15 @@
 require 'rails_helper'
 
 RSpec.describe Movement, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'Validations of the Movement model' do
+    subject { build(:movement) }
+
+    it 'Validate if there is a relationship with user' do
+      should belong_to(:user)
+    end
+
+    it 'Validate if there is a relationship with user' do
+      should belong_to(:account)
+    end
+  end
 end

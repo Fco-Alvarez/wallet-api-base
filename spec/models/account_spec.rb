@@ -19,7 +19,7 @@
 require 'rails_helper'
 
 RSpec.describe Account, type: :model do
-  describe 'Validations of the user model' do
+  describe 'Validations of the Account model' do
     subject { build(:account) }
 
     it 'Validate if there is a relationship with user' do
