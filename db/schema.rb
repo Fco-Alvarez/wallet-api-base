@@ -31,16 +31,7 @@ ActiveRecord::Schema.define(version: 2022_11_09_002707) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "refund_requests", force: :cascade do |t|
-    t.string "concept"
-    t.string "state"
-    t.bigint "transaction_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["transaction_id"], name: "index_refund_requests_on_transaction_id"
-  end
-
-  create_table "transactions", force: :cascade do |t|
+  create_table "movements", force: :cascade do |t|
     t.decimal "amount"
     t.string "concept"
     t.date "date"
@@ -49,8 +40,17 @@ ActiveRecord::Schema.define(version: 2022_11_09_002707) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["account_id"], name: "index_transactions_on_account_id"
-    t.index ["user_id"], name: "index_transactions_on_user_id"
+    t.index ["account_id"], name: "index_movements_on_account_id"
+    t.index ["user_id"], name: "index_movements_on_user_id"
+  end
+
+  create_table "refund_requests", force: :cascade do |t|
+    t.string "concept"
+    t.string "state"
+    t.bigint "movement_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["movement_id"], name: "index_refund_requests_on_movement_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2022_11_09_002707) do
   end
 
   add_foreign_key "accounts", "users"
-  add_foreign_key "refund_requests", "transactions"
-  add_foreign_key "transactions", "accounts"
-  add_foreign_key "transactions", "users"
+  add_foreign_key "movements", "accounts"
+  add_foreign_key "movements", "users"
+  add_foreign_key "refund_requests", "movements"
 end

@@ -1,6 +1,6 @@
-class CreateTransactions < ActiveRecord::Migration[6.1]
+class CreateMovements < ActiveRecord::Migration[6.1]
   def change
-    create_table :transactions do |t|
+    create_table :movements do |t|
       t.decimal :amount
       t.string :concept
       t.date :date

@@ -15,7 +15,7 @@ class User < ApplicationRecord
   require "securerandom"
   has_secure_password
 
-  has_many :transactions
+  has_many :movements
   has_many :accounts
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: "Invalid email" }
   validates :rol, inclusion: { in: %w(admin regular),
@@ -32,7 +32,7 @@ class User < ApplicationRecord
   end
 
   def account_difference(account_id)
-    # transactions.by_account(account_id).by_type('topup').sum(:amount) - transactions.by_account(account_id).by_type('payment').sum(:amount)
-    transactions.by_account(account_id).by_type('topup').pluck(:amount).sum - transactions.by_account(account_id).by_type('payment').pluck(:amount).sum
+    # movements.by_account(account_id).by_type('topup').sum(:amount) - movements.by_account(account_id).by_type('payment').sum(:amount)
+    movements.by_account(account_id).by_type('topup').pluck(:amount).sum - movements.by_account(account_id).by_type('payment').pluck(:amount).sum
   end
 end
