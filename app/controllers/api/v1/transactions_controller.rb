@@ -8,7 +8,7 @@ class Api::V1::TransactionsController < ApplicationController
   # GET /transactions
   def index
     @transactions = if @current_user.rol == 'admin'
-                      pagy(apply_scopes(Transaction.where(user_id: @user.id).order(date: :desc)))
+                      pagy(Transaction.all).order(date: :desc)
                     else
                       apply_scopes(Transaction.where(user_id: @user.id).order(date: :desc))
                     end
