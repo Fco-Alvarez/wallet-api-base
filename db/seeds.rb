@@ -29,25 +29,34 @@ user3 = User.create(
           rol: ['admin', 'regular'].sample
         )
 
-Account.create(
-  user: user2,
-  currency: 'usd'
-)
+user4 = User.create(
+          email: Faker::Internet.email,
+          first_name: Faker::Name.first_name,
+          last_name: Faker::Name.last_name,
+          password: 'password',
+          rol: ['admin', 'regular'].sample
+        )
 
-Account.create(
-  user: user2,
-  currency: 'ars'
-)
+user5 = User.create(
+          email: Faker::Internet.email,
+          first_name: Faker::Name.first_name,
+          last_name: Faker::Name.last_name,
+          password: 'password',
+          rol: ['admin', 'regular'].sample
+        )
 
-Account.create(
-  user: user3,
-  currency: 'usd'
-)
+[user2, user3, user4, user5].each do |user|
+  Account.create(
+    user: user,
+    currency: 'usd'
+  )
 
-Account.create(
-  user: user3,
-  currency: 'ars'
-)
+  Account.create(
+    user: user,
+    currency: 'ars'
+  )
+end
+
 
 Account.all.each do |account|
   [1, 2, 3].sample.times do
