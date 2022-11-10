@@ -26,9 +26,9 @@ FactoryBot.define do
   factory :movement do
     amount { Faker::Number.decimal(l_digits: 3, r_digits: 2) }
     concept { Faker::Lorem.word }
-    date { "2022-11-02" }
-    type { "" }
-    account { nil }
-    user { nil }
+    date { Date.today }
+    kind { %w(topup payment).sample }
+    account { rand(1000..100_000) }
+    user
   end
 end

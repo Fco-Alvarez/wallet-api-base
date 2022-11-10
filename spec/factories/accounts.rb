@@ -18,7 +18,7 @@
 #
 FactoryBot.define do
   factory :account do
-    currency { "MyString" }
-    user { nil }
+    currency { %w(usd ars) }
+    user
   end
 end

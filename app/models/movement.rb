@@ -32,7 +32,20 @@ class Movement < ApplicationRecord
   validates :account_id, presence: true, ars_currency_account: true, on: :create_from_controller
   validates_with UserAccountValidator, on: :create_from_controller
 
+  validate :validate_different_user
+  validate :validate_sufficient_balance
+
   scope :by_concept, -> concept { where( "concept LIKE ?", "%" + concept + "%" ) }
   scope :by_type, -> kind { where( "kind = ?", kind) }
   scope :by_account, -> account_id { where( "account_id = ?", account_id ) }
+
+  private
+
+  def validate_different_user
+    errors.add(:user_id, 'No se puede enviarse dinero asi mismo.') if user_id == account.user_id
+  end
+
+  def validate_sufficient_balance
+    errors.add(:amount, 'Saldo insuficiente.') if account.get_balance < amount
+  end
 end
