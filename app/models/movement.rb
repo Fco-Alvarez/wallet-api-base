@@ -2,7 +2,7 @@ require_relative '../validators/ars_currency_account_validator.rb'
 require_relative '../validators/user_account_validator.rb'
 # == Schema Information
 #
-# Table name: transactions
+# Table name: movements
 #
 #  id         :bigint           not null, primary key
 #  amount     :decimal(, )
@@ -16,15 +16,15 @@ require_relative '../validators/user_account_validator.rb'
 #
 # Indexes
 #
-#  index_transactions_on_account_id  (account_id)
-#  index_transactions_on_user_id     (user_id)
+#  index_movements_on_account_id  (account_id)
+#  index_movements_on_user_id     (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class Transaction < ApplicationRecord
+class Movement < ApplicationRecord
   belongs_to :account
   belongs_to :user
   validates :kind, inclusion: { in: %w(topup payment),

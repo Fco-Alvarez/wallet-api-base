@@ -6,7 +6,7 @@ Rails.application.routes.draw do
         get '/balance', to: 'users#balance'
         post '/auth/login', to: 'authentication#login'
         post '/auth/register',  to: 'authentication#register'
-        resources :transactions, only: %i[index create show] do
+        resources :movements, only: %i[index create show] do
           post 'transfer', on: :collection
         end
         resources :accounts, only: %i[index]

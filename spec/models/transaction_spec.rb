@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: transactions
+# Table name: movements
 #
 #  id         :bigint           not null, primary key
 #  amount     :decimal(, )
@@ -14,8 +14,8 @@
 #
 # Indexes
 #
-#  index_transactions_on_account_id  (account_id)
-#  index_transactions_on_user_id     (user_id)
+#  index_movements_on_account_id  (account_id)
+#  index_movements_on_user_id     (user_id)
 #
 # Foreign Keys
 #
@@ -24,6 +24,6 @@
 #
 require 'rails_helper'
 
-RSpec.describe Transaction, type: :model do
+RSpec.describe movement, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
 end
