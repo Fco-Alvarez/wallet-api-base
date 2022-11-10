@@ -27,6 +27,14 @@ RSpec.describe Api::V1::MovementsController, type: :routing do
       )
     end
 
+    it "routes to #transfer" do
+      expect(post: "/api/v1/movements/transfer").to route_to(
+        format: 'json',
+        controller: 'api/v1/movements',
+        action: 'transfer'
+      )
+    end
+
     # it "routes to #update via PUT" do
     #   expect(put: "/movements/1").to route_to("movements#update", id: "1")
     # end
