@@ -12,9 +12,9 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/transactions", type: :request do
+RSpec.describe "/movements", type: :request do
   # This should return the minimal set of attributes required to create a valid
-  # Transaction. As you add validations to Transaction, be sure to
+  # movement. As you add validations to movement, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
     skip("Add a hash of attributes valid for your model")
@@ -26,7 +26,7 @@ RSpec.describe "/transactions", type: :request do
 
   # This should return the minimal set of values that should be in the headers
   # in order to pass any filters (e.g. authentication) defined in
-  # TransactionsController, or in your router and rack
+  # movementsController, or in your router and rack
   # middleware. Be sure to keep this updated too.
   let(:valid_headers) {
     {}
@@ -34,8 +34,8 @@ RSpec.describe "/transactions", type: :request do
 
   describe "GET /index" do
     it "renders a successful response" do
-      Transaction.create! valid_attributes
-      get api_v1_transactions_url, headers: valid_headers, as: :json
+      movement.create! valid_attributes
+      get api_v1_movements_url, headers: valid_headers, as: :json
       expect(response).to be_successful
     end
 
@@ -46,40 +46,40 @@ RSpec.describe "/transactions", type: :request do
 
   describe "GET /show" do
     it "renders a successful response" do
-      transaction = Transaction.create! valid_attributes
-      get api_v1_transaction_url(transaction), as: :json
+      movement = movement.create! valid_attributes
+      get api_v1_movement_url(movement), as: :json
       expect(response).to be_successful
     end
   end
 
   describe "POST /create" do
     context "with valid parameters" do
-      it "creates a new Transaction" do
+      it "creates a new movement" do
         expect {
-          post api_v1_transactions_url,
-               params: { transaction: valid_attributes }, headers: valid_headers, as: :json
-        }.to change(Transaction, :count).by(1)
+          post api_v1_movements_url,
+               params: { movement: valid_attributes }, headers: valid_headers, as: :json
+        }.to change(movement, :count).by(1)
       end
 
-      it "renders a JSON response with the new transaction" do
-        post api_v1_transactions_url,
-             params: { transaction: valid_attributes }, headers: valid_headers, as: :json
+      it "renders a JSON response with the new movement" do
+        post api_v1_movements_url,
+             params: { movement: valid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
 
     context "with invalid parameters" do
-      it "does not create a new Transaction" do
+      it "does not create a new movement" do
         expect {
-          post api_v1_transactions_url,
-               params: { transaction: invalid_attributes }, as: :json
-        }.to change(Transaction, :count).by(0)
+          post api_v1_movements_url,
+               params: { movement: invalid_attributes }, as: :json
+        }.to change(movement, :count).by(0)
       end
 
-      it "renders a JSON response with errors for the new transaction" do
-        post api_v1_transactions_url,
-             params: { transaction: invalid_attributes }, headers: valid_headers, as: :json
+      it "renders a JSON response with errors for the new movement" do
+        post api_v1_movements_url,
+             params: { movement: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
@@ -92,28 +92,28 @@ RSpec.describe "/transactions", type: :request do
         skip("Add a hash of attributes valid for your model")
       }
 
-      it "updates the requested transaction" do
-        transaction = Transaction.create! valid_attributes
-        patch api_v1_transaction_url(transaction),
-              params: { transaction: new_attributes }, headers: valid_headers, as: :json
-        transaction.reload
+      it "updates the requested movement" do
+        movement = movement.create! valid_attributes
+        patch api_v1_movement_url(movement),
+              params: { movement: new_attributes }, headers: valid_headers, as: :json
+        movement.reload
         skip("Add assertions for updated state")
       end
 
-      it "renders a JSON response with the transaction" do
-        transaction = Transaction.create! valid_attributes
-        patch api_v1_transaction_url(transaction),
-              params: { transaction: new_attributes }, headers: valid_headers, as: :json
+      it "renders a JSON response with the movement" do
+        movement = movement.create! valid_attributes
+        patch api_v1_movement_url(movement),
+              params: { movement: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
 
     context "with invalid parameters" do
-      it "renders a JSON response with errors for the transaction" do
-        transaction = Transaction.create! valid_attributes
-        patch api_v1_transaction_url(transaction),
-              params: { transaction: invalid_attributes }, headers: valid_headers, as: :json
+      it "renders a JSON response with errors for the movement" do
+        movement = movement.create! valid_attributes
+        patch api_v1_movement_url(movement),
+              params: { movement: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
@@ -121,11 +121,11 @@ RSpec.describe "/transactions", type: :request do
   end
 
   describe "DELETE /destroy" do
-    it "destroys the requested transaction" do
-      transaction = Transaction.create! valid_attributes
+    it "destroys the requested movement" do
+      movement = movement.create! valid_attributes
       expect {
-        delete api_v1_transaction_url(transaction), headers: valid_headers, as: :json
-      }.to change(Transaction, :count).by(-1)
+        delete api_v1_movement_url(movement), headers: valid_headers, as: :json
+      }.to change(movement, :count).by(-1)
     end
   end
 end

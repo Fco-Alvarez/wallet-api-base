@@ -37,8 +37,8 @@ RSpec.describe User, type: :model do
       should validate_length_of(:password).is_at_least(6)
     end
 
-    it 'Validate relationship with transactions' do
-      should have_many(:transactions)
+    it 'Validate relationship with movements' do
+      should have_many(:movements)
     end
 
     it 'Validate relationship with accounts' do

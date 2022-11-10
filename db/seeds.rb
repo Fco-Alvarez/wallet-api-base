@@ -56,7 +56,7 @@ Account.create(
 [user1, user2, user3].each do |user|
   user.accounts.each do |account|
     (6..10).to_a.sample.times do
-      Transaction.create(
+      Movement.create(
         kind: 'topup',
         amount: rand(1000..100000),
         concept: Faker::Lorem.word,
@@ -66,7 +66,7 @@ Account.create(
       )
     end
     (1..4).to_a.sample.times do
-      Transaction.create(
+      Movement.create(
         kind: 'payment',
         amount: rand(1000..10000),
         concept: Faker::Lorem.word,
