@@ -18,7 +18,7 @@
 #
 class Account < ApplicationRecord
   belongs_to :user
-  has_many :transactions
+  has_many :movements
 
   validates :currency, inclusion: { in: %w(usd ars),
                                     message: "%{value} is not a valid currency" }
