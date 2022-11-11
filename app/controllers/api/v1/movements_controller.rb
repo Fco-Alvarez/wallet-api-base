@@ -7,7 +7,7 @@ class Api::V1::MovementsController < ApplicationController
   # GET /movements
   def index
     @movements = if @current_user.rol == 'admin'
-                      pagy(Movement.all).order(date: :desc)
+                      @pagy, @records = pagy(Movement.all.order(date: :desc))
                     else
                       apply_scopes(Movement.where(user_id: @current_user.id).order(date: :desc))
                     end
@@ -19,6 +19,7 @@ class Api::V1::MovementsController < ApplicationController
   def create
     @movement = Movement.new(movement_params)
     @movement.user_id = @current_user.id
+    @movement.date = Date.today
     if @movement.save(context: :create_from_controller)
       render json: @movement, status: :created
     else
@@ -29,7 +30,7 @@ class Api::V1::MovementsController < ApplicationController
   # GET /movements/1
   def show
     @movement = Movement.find(params[:id])
-    render json: @movement
+    render :show
   end
 
   # PATCH/PUT /movements/1
