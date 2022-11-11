@@ -45,37 +45,45 @@ class Api::V1::MovementsController < ApplicationController
   def transfer
     @movement = Movement.new(movement_params)
     @movement.date = Date.today
+    @movement.kind = 'payment'
 
-    # verificando la cuenta destino del user_id
-    @receiving_user = User.find_by(id: @movement.user_id)
-    destination_account = @receiving_user.accounts.find_by(id: params[:movement][:destination_account_id])
-
-    # @current_user.accounts.find_by(id: 3)  -> verifica que el usuario que inicio sesion
-    # sea su cuenta. pero esto no deberia pasar desde el front xd
-    if params[:movement][:destination_account_id].present? && destination_account && @current_user.accounts.find_by(id: @movement.account_id)
-      if @movement.save
+    if @movement.valid?(:money_transfer)
+      destination_account_id = params[:movement][:destination_account_id]
+      @receiving_user = User.find_by(id: @movement.user_id)
+      if destination_account_id && account_belongs_recipient(destination_account_id) && account_belongs_issuer
+        @movement.save
         Movement.create(
           user: @current_user,
           amount: @movement.amount,
           concept: @movement.concept,
           date: Date.today,
           kind: 'topup',
-          account: destination_account
+          account_id: destination_account_id
         )
-        @receiving_user = @movement.user
         render :transfer, status: :created
       else
-        render json: { errors: @movement.errors.messages }, status: :unprocessable_entity
+        if destination_account_id
+          message = 'La cuenta no coincide con el que inicion sesión ó la cuenta destino
+                  no coincide el usuario a quien se esta enviando el dinero'
+        else
+          message = 'Se necesita la cuenta a quien se esta enviando'
+        end
+        render json: { errors: message }, status: :unprocessable_entity
       end
     else
-      unless params[:movement][:destination_account_id].present?
-        message = 'Se necesita la cuenta a quien se esta enviando'
-      else
-        message = 'Cuenta no coincide con el que inicion sesión ó la cuenta destino
-                  no es del usuario a quien se esta enviando el dinero'
-      end
-      render json: { errors: message }, status: :unprocessable_entity
+      render json: { errors: @movement.errors.messages }, status: :unprocessable_entity
     end
+  end
+
+  def account_belongs_recipient(destination_account_id)
+    # verificando la cuenta destino del user_id
+    @receiving_user.accounts.find_by(id: destination_account_id)
+  end
+
+  def account_belongs_issuer
+    # verifica que el usuario que inicio sesion
+    # sea su cuenta. pero esto no deberia pasar desde el front xd
+    @current_user.accounts.find_by(id: @movement.account_id)
   end
 
   private
