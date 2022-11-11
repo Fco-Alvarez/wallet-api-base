@@ -28,7 +28,7 @@ FactoryBot.define do
     concept { Faker::Lorem.word }
     date { Date.today }
     kind { %w(topup payment).sample }
-    account { rand(1000..100_000) }
+    account
     user
   end
 end

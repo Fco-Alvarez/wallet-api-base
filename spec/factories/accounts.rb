@@ -18,7 +18,7 @@
 #
 FactoryBot.define do
   factory :account do
-    currency { %w(usd ars) }
+    currency { %w(usd ars).sample }
     user
   end
 end

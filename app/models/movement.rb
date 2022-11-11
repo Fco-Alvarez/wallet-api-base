@@ -28,6 +28,7 @@ class Movement < ApplicationRecord
   belongs_to :account
   belongs_to :user
   has_one :refund_request
+  has_many :movementlogs
   validates :kind, inclusion: { in: %w(topup payment),
                                 message: "%{value} is not a valid type" }
   validates :account_id, presence: true, ars_currency_account: true, on: :create_from_controller
