@@ -30,7 +30,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def balance
-    amount = @current_user.account_balance(currency_param)
+    amount = @current_user.account_balance(params[:currency])
     balance = { currency: currency_param, amount: amount }
     render json: { balance: balance }
   end
