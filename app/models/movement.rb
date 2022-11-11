@@ -1,5 +1,5 @@
-require_relative '../validators/ars_currency_account_validator.rb'
-require_relative '../validators/user_account_validator.rb'
+require_relative "../validators/ars_currency_account_validator.rb"
+require_relative "../validators/user_account_validator.rb"
 # == Schema Information
 #
 # Table name: movements
@@ -27,6 +27,7 @@ require_relative '../validators/user_account_validator.rb'
 class Movement < ApplicationRecord
   belongs_to :account
   belongs_to :user
+  has_one :refund_request
   validates :kind, inclusion: { in: %w(topup payment),
                                 message: "%{value} is not a valid type" }
   validates :account_id, presence: true, ars_currency_account: true, on: :create_from_controller
@@ -35,17 +36,17 @@ class Movement < ApplicationRecord
   validate :validate_different_user
   validate :validate_sufficient_balance
 
-  scope :by_concept, -> concept { where( "concept LIKE ?", "%" + concept + "%" ) }
-  scope :by_type, -> kind { where( "kind = ?", kind) }
-  scope :by_account, -> account_id { where( "account_id = ?", account_id ) }
+  scope :by_concept, ->concept { where("concept LIKE ?", "%" + concept + "%") }
+  scope :by_type, ->kind { where("kind = ?", kind) }
+  scope :by_account, ->account_id { where("account_id = ?", account_id) }
 
   private
 
   def validate_different_user
-    errors.add(:user_id, 'No se puede enviarse dinero asi mismo.') if user_id == account.user_id
+    errors.add(:user_id, "No se puede enviarse dinero asi mismo.") if user_id == account.user_id
   end
 
   def validate_sufficient_balance
-    errors.add(:amount, 'Saldo insuficiente.') if account.get_balance < amount
+    errors.add(:amount, "Saldo insuficiente.") if account.get_balance < amount
   end
 end
