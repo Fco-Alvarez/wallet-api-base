@@ -7,7 +7,6 @@ json.date movement.date
 json.kind movement.kind
 json.account_id movement.account_id
 
-
 # json.user do
 #   json.email @movement.user.email
 #   json.name @movement.user.first_name
