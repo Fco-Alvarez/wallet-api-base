@@ -96,7 +96,7 @@ RSpec.describe 'movements', type: :request do
       end
 
       it 'updates the requested movement' do
-        movement = movement.create! valid_attributes
+        movement = Movement.create! valid_attributes
         patch api_v1_movement_url(movement),
               params: { movement: new_attributes }, headers: valid_headers, as: :json
         movement.reload
@@ -104,7 +104,7 @@ RSpec.describe 'movements', type: :request do
       end
 
       it 'renders a JSON response with the movement' do
-        movement = movement.create! valid_attributes
+        movement = Movement.create! valid_attributes
         patch api_v1_movement_url(movement),
               params: { movement: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
@@ -114,7 +114,7 @@ RSpec.describe 'movements', type: :request do
 
     context 'with invalid parameters' do
       it 'renders a JSON response with errors for the movement' do
-        movement = movement.create! valid_attributes
+        movement = Movement.create! valid_attributes
         patch api_v1_movement_url(movement),
               params: { movement: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
@@ -125,7 +125,7 @@ RSpec.describe 'movements', type: :request do
 
   describe 'DELETE /destroy' do
     it 'destroys the requested movement' do
-      movement = movement.create! valid_attributes
+      movement = Movement.create! valid_attributes
       expect do
         delete api_v1_movement_url(movement), headers: valid_headers, as: :json
       end.to change(Movement, :count).by(-1)

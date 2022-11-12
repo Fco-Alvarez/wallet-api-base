@@ -37,6 +37,8 @@ module Api
       # GET /movements/1
       def show
         @movement = Movement.find(params[:id])
+        @movementlogs = Movementlog.where(movement_id: @movement.id)
+
         render :show
       end
 
