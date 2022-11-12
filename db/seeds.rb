@@ -45,7 +45,7 @@ user5 = User.create(
           rol: ['admin', 'regular'].sample
         )
 
-[user2, user3, user4, user5].each do |user|
+[user1, user2, user3, user4, user5].each do |user|
   Account.create(
     user: user,
     currency: 'usd'
@@ -57,19 +57,35 @@ user5 = User.create(
   )
 end
 
-
-Account.all.each do |account|
-  [1, 2, 3].sample.times do
-    Movement.create(
-      kind: 'topup',
-      amount: rand(1000..100_000),
-      concept: Faker::Lorem.word,
-      date: Faker::Date.birthday(min_age: 0, max_age: 5),
-      user: user1,
-      account: account
-    )
+[user1, user2, user3].each do |user|
+  user.accounts.each do |account|
+    (6..10).to_a.sample.times do
+      amount = rand(1000..100_000)
+      Movement.create(
+        kind: 'topup',
+        amount: amount,
+        concept: Faker::Lorem.word,
+        date: Faker::Date.birthday(min_age: 0, max_age: 5),
+        user: user,
+        account: account
+      )
+      account.update_column(:total, account.total + amount)
+    end
   end
 end
+
+# Account.all.each do |account|
+#   [1, 2, 3].sample.times do
+#     Movement.create(
+#       kind: 'topup',
+#       amount: rand(1000..100_000),
+#       concept: Faker::Lorem.word,
+#       date: Faker::Date.birthday(min_age: 0, max_age: 5),
+#       user: user1,
+#       account: account
+#     )
+#   end
+# end
 
 # [user1, user2, user3].each do |user|
 #   user.accounts.each do |account|
