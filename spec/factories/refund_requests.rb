@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: refund_requests
@@ -19,8 +21,8 @@
 #
 FactoryBot.define do
   factory :refund_request do
-    concept { "MyString" }
-    state { "MyString" }
+    concept { 'MyString' }
+    state { 'MyString' }
     movement { nil }
   end
 end

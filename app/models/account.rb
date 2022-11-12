@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: accounts
@@ -20,10 +22,10 @@ class Account < ApplicationRecord
   belongs_to :user
   has_many :movements
 
-  validates :currency, inclusion: { in: %w(usd ars),
-                                    message: "%{value} is not a valid currency" }
+  validates :currency, inclusion: { in: %w[usd ars],
+                                    message: '%{value} is not a valid currency' }
 
   def get_balance
-    self.user.account_difference(self.id)
+    user.account_difference(id)
   end
 end

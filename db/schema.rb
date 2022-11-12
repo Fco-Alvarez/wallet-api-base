@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_09_002707) do
+ActiveRecord::Schema.define(version: 2022_11_11_115346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,15 @@ ActiveRecord::Schema.define(version: 2022_11_09_002707) do
     t.date "closing_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "movementlogs", force: :cascade do |t|
+    t.decimal "amount"
+    t.string "kind"
+    t.bigint "movement_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["movement_id"], name: "index_movementlogs_on_movement_id"
   end
 
   create_table "movements", force: :cascade do |t|
@@ -64,6 +73,7 @@ ActiveRecord::Schema.define(version: 2022_11_09_002707) do
   end
 
   add_foreign_key "accounts", "users"
+  add_foreign_key "movementlogs", "movements"
   add_foreign_key "movements", "accounts"
   add_foreign_key "movements", "users"
   add_foreign_key "refund_requests", "movements"

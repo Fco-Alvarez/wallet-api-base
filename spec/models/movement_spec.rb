@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: movements
@@ -26,14 +28,25 @@ require 'rails_helper'
 
 RSpec.describe Movement, type: :model do
   describe 'Validations of the Movement model' do
-    subject { build(:movement) }
-
-    it 'Validate if there is a relationship with user' do
-      should belong_to(:user)
+    let(:new_movement) do
+      create(
+        :movement,
+        amount: 0,
+        account_id: another_account.id,
+        user_id: new_account.user_id
+      )
     end
 
+    let(:new_account) { create(:account) }
+    let(:another_account) { create(:account) }
+
     it 'Validate if there is a relationship with user' do
-      should belong_to(:account)
+      expect(new_movement).to belong_to(:user)
+    end
+
+    it 'Validate if there is a relationship with account' do
+      expect(new_movement).to belong_to(:account)
+      # expect(subject).to raise_error(NoMethodError)
     end
   end
 end

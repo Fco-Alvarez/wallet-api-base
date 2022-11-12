@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: refund_requests
@@ -19,6 +21,6 @@
 #
 class RefundRequest < ApplicationRecord
   belongs_to :movement
-  validates :state, inclusion: { in: %w(pending refunded rejected cancelled),
+  validates :state, inclusion: { in: %w[pending refunded rejected cancelled],
                                  message: "%{value} is not a valid state" }
 end

@@ -1,26 +1,25 @@
 # frozen_string_literal: true
 
-# == Schema Information
+# == Schema
+# Information
 #
-# Table name: refund_requests
+# Table name: movementlogs
 #
 #  id          :bigint           not null, primary key
-#  concept     :string
-#  state       :string
+#  amount      :decimal(, )
+#  kind        :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  movement_id :bigint           not null
 #
 # Indexes
 #
-#  index_refund_requests_on_movement_id  (movement_id)
+#  index_movementlogs_on_movement_id  (movement_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (movement_id => movements.id)
 #
-require 'rails_helper'
-
-RSpec.describe RefundRequest, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+class Movementlog < ApplicationRecord
+  belongs_to :movement
 end
