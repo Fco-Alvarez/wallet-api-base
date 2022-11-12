@@ -36,19 +36,20 @@ RSpec.describe 'movements', type: :request do
 
   describe 'GET /index' do
     it 'renders a successful response' do
-      movement.create! valid_attributes
+      Movement.create! valid_attributes
       get api_v1_movements_url, headers: valid_headers, as: :json
       expect(response).to be_successful
     end
 
     it 'returns values based on scopes' do
       pending 'pending task'
+      this_should_not_get_executed
     end
   end
 
   describe 'GET /show' do
     it 'renders a successful response' do
-      movement = movement.create! valid_attributes
+      movement = Movement.create! valid_attributes
       get api_v1_movement_url(movement), as: :json
       expect(response).to be_successful
     end
