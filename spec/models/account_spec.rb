@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: accounts
@@ -21,14 +23,14 @@ require 'rails_helper'
 
 RSpec.describe Account, type: :model do
   describe 'Validations of the Account model' do
-    subject { build(:account) }
+    let(:new_account) { build(:account) }
 
     it 'Validate if there is a relationship with user' do
-      should belong_to(:user)
+      expect(new_account).to belong_to(:user)
     end
 
     it 'Validate relationship with movements' do
-      should have_many(:movements)
+      expect(new_account).to have_many(:movements)
     end
   end
 end

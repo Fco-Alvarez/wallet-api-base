@@ -1,5 +1,7 @@
-require_relative "../validators/ars_currency_account_validator.rb"
-require_relative "../validators/user_account_validator.rb"
+# frozen_string_literal: true
+
+require_relative '../validators/ars_currency_account_validator'
+require_relative '../validators/user_account_validator'
 # == Schema Information
 #
 # Table name: movements
@@ -28,25 +30,36 @@ class Movement < ApplicationRecord
   belongs_to :account
   belongs_to :user
   has_one :refund_request
-  validates :kind, inclusion: { in: %w(topup payment),
-                                message: "%{value} is not a valid type" }
-  validates :account_id, presence: true, ars_currency_account: true, on: :create_from_controller
+  has_many :movementlogs
+  validates :kind, inclusion: { in: %w[topup payment],
+                                message: '%{value} is not a valid type' }
+  validates :account_id, ars_currency_account: true, on: :create_from_controller
   validates_with UserAccountValidator, on: :create_from_controller
 
   validate :validate_different_user, on: :money_transfer
   validate :validate_sufficient_balance, on: :money_transfer
 
-  scope :by_concept, ->concept { where("concept LIKE ?", "%" + concept + "%") }
-  scope :by_type, ->kind { where("kind = ?", kind) }
-  scope :by_account, ->account_id { where("account_id = ?", account_id) }
+  scope :by_concept, ->(concept) { where('concept LIKE ?', "%#{concept}%") }
+  scope :by_type, ->(kind) { where(kind: kind) }
+  scope :by_account, ->(account_id) { where(account_id: account_id) }
+
+  after_update :create_a_movementlog
 
   private
 
   def validate_different_user
-    errors.add(:user_id, "No se puede enviarse dinero asi mismo.") if user_id == account.user_id
+    errors.add(:user_id, 'No se puede enviarse dinero asi mismo.') if user_id == account.user_id
   end
 
   def validate_sufficient_balance
-    errors.add(:amount, "Saldo insuficiente.") if account.get_balance < amount
+    errors.add(:amount, 'Saldo insuficiente.') if account.get_balance < amount
+  end
+
+  def create_a_movementlog
+    Movementlog.create(
+      movement_id: id,
+      amount: amount,
+      kind: kind
+    )
   end
 end

@@ -32,6 +32,15 @@ ActiveRecord::Schema.define(version: 2022_11_12_202954) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "movementlogs", force: :cascade do |t|
+    t.decimal "amount"
+    t.string "kind"
+    t.bigint "movement_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["movement_id"], name: "index_movementlogs_on_movement_id"
+  end
+
   create_table "movements", force: :cascade do |t|
     t.decimal "amount"
     t.string "concept"
@@ -65,6 +74,7 @@ ActiveRecord::Schema.define(version: 2022_11_12_202954) do
   end
 
   add_foreign_key "accounts", "users"
+  add_foreign_key "movementlogs", "movements"
   add_foreign_key "movements", "accounts"
   add_foreign_key "movements", "users"
   add_foreign_key "refund_requests", "movements"

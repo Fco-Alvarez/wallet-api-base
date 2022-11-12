@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   # convirtiendo la respuesta del servidor a objecto json
   # y asi poder evaluar durante las pruebas

@@ -12,6 +12,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'discard', '~> 1.2', '>= 1.2.1'
 gem 'dotenv-rails', '~> 2.7', '>= 2.7.6'
 gem 'has_scope'
+gem 'jbuilder', '~> 2.11', '>= 2.11.5' # declare JSON structures
 gem 'jsonapi-serializer', '~> 2.2'
 gem 'jwt', '~> 2.3'
 gem 'pagy', '~> 5.10.1'
@@ -19,7 +20,6 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'rack-cors', '~> 1.1', '>= 1.1.1'
 gem 'rails-i18n', '~> 7.0', '>= 7.0.5'
-gem 'jbuilder', '~> 2.11', '>= 2.11.5' # declarar estructuras JSON
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
