@@ -51,12 +51,20 @@ class Api::V1::MovementsController < ApplicationController
     @movement = Movement.new(movement_params)
     @movement.date = Date.today
     @movement.kind = 'payment'
-
+    destination_account_id = params[:movement][:destination_account_id]
+    destination_account = account_belongs_recipient(destination_account_id)
+    if destination_account
+      @movement.user = destination_account.user
+    end
     if @movement.valid?(:money_transfer)
-      destination_account_id = params[:movement][:destination_account_id]
-      @receiving_user = User.find_by(id: @movement.user_id)
-      if destination_account_id && account_belongs_recipient(destination_account_id) && account_belongs_issuer
+      # @receiving_user = User.find_by(id: @movement.user_id)
+      @receiving_user = destination_account.user
+      if destination_account_id && account_belongs_issuer
         @movement.save
+        account = @movement.account
+        # updates accounts
+        account.update_column(:total, account.total - @movement.amount.to_f)
+        destination_account.update_column(:total, destination_account.total + @movement.amount.to_f)
         Movement.create(
           user: @current_user,
           amount: @movement.amount,
@@ -82,7 +90,7 @@ class Api::V1::MovementsController < ApplicationController
 
   def account_belongs_recipient(destination_account_id)
     # verificando la cuenta destino del user_id
-    @receiving_user.accounts.find_by(id: destination_account_id)
+    Account.find_by(id: destination_account_id)
   end
 
   def account_belongs_issuer
