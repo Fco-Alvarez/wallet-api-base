@@ -20,8 +20,12 @@ class Api::V1::MovementsController < ApplicationController
     @movement = Movement.new(movement_params)
     @movement.user_id = @current_user.id
     @movement.date = Date.today
-    if @movement.save(context: :create_from_controller)
-      render json: @movement, status: :created
+    # if @movement.save(context: :create_from_controller)
+    if @movement.valid?(:create_from_controller)
+      @movement.save
+      account = @movement.account
+      account.update_column(:total, account.total + @movement.amount.to_f)
+      render :show, status: :created
     else
       render json: @movement.errors, status: :unprocessable_entity
     end
