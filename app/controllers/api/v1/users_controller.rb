@@ -21,8 +21,8 @@ module Api
         @user = User.new(user_params)
         if @user.save
           render json: @user, status: :created
-          Account.create(user: @current_user, currency:'usd')
-          Account.create(user: @current_user, currency:'ars')
+          Account.create(user: @current_user, currency: 'usd')
+          Account.create(user: @current_user, currency: 'ars')
         else
           render json: @user.errors, status: :unprocessable_entity
         end
