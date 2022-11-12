@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json.movementlogs movementlogs do | movementlog |
+json.movementlogs movementlogs do |movementlog|
   json.movement_id movementlog.movement_id
   json.kind movementlog.kind
   json.amount movementlog.amount
