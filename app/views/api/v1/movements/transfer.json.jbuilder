@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.id @movement.id
 json.amount @movement.amount
 json.concept @movement.concept

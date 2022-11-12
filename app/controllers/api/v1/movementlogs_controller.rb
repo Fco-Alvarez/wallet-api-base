@@ -3,10 +3,7 @@
 module Api
   module V1
     class MovementlogsController < ApplicationController
-
-      def show
-      end
-
+      def show; end
     end
   end
 end

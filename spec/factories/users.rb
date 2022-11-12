@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -17,6 +19,6 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     email { Faker::Internet.email }
     password { Faker::Internet.password(min_length: 10, max_length: 20) }
-    rol { %w(admin regular).sample }
+    rol { %w[admin regular].sample }
   end
 end

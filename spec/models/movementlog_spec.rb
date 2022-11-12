@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: movementlogs
@@ -20,7 +22,6 @@
 require 'rails_helper'
 
 RSpec.describe Movementlog, type: :model do
-
   it 'creates a movementlog when a movement is updated' do
     expect do
       new_user = create(:user)
@@ -28,5 +29,4 @@ RSpec.describe Movementlog, type: :model do
       new_movement.update(amount: rand(1.00..100_000.00))
     end.to change(described_class, :count).by(1)
   end
-
 end

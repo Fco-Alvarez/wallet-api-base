@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: accounts
@@ -18,7 +20,7 @@
 #
 FactoryBot.define do
   factory :account do
-    currency { %w(usd ars).sample }
+    currency { %w[usd ars].sample }
     user
   end
 end

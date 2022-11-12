@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: movementlogs
@@ -20,8 +22,8 @@
 # Do not use factorybot here. It creates from movement update
 FactoryBot.define do
   factory :movementlog do
-    amount { "9.99" }
-    kind { "MyString" }
+    amount { '9.99' }
+    kind { 'MyString' }
     movement { nil }
   end
 end

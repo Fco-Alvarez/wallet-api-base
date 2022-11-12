@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: movements
@@ -26,8 +28,8 @@ FactoryBot.define do
   factory :movement do
     amount { Faker::Number.decimal(l_digits: 3, r_digits: 2) }
     concept { Faker::Lorem.word }
-    date { Date.today }
-    kind { %w(topup payment).sample }
+    date { Time.zone.today }
+    kind { %w[topup payment].sample }
     account
     user
   end
