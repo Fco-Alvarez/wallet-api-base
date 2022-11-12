@@ -7,10 +7,10 @@ class Api::V1::MovementsController < ApplicationController
   # GET /movements
   def index
     @movements = if @current_user.rol == 'admin'
-                      @pagy, @records = pagy(Movement.all.order(date: :desc))
-                    else
-                      apply_scopes(Movement.where(user_id: @current_user.id).order(date: :desc))
-                    end
+                   @pagy, @records = pagy(Movement.all.order(date: :desc))
+                 else
+                   apply_scopes(Movement.where(user_id: @current_user.id).order(date: :desc))
+                 end
 
     render json: @movements
   end

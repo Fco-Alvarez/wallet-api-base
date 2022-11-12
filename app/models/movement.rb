@@ -41,6 +41,8 @@ class Movement < ApplicationRecord
   scope :by_type, ->kind { where("kind = ?", kind) }
   scope :by_account, ->account_id { where("account_id = ?", account_id) }
 
+  after_update :create_a_movementlog
+
   private
 
   def validate_different_user
@@ -49,5 +51,13 @@ class Movement < ApplicationRecord
 
   def validate_sufficient_balance
     errors.add(:amount, "Saldo insuficiente.") if account.get_balance < amount
+  end
+
+  def create_a_movementlog
+    Movementlog.create(
+      movement_id: self.id,
+      amount: self.amount,
+      kind: self.kind
+    )
   end
 end

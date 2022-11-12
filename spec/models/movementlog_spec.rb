@@ -24,7 +24,7 @@ RSpec.describe Movementlog, type: :model do
   it 'creates a movementlog when a movement is updated' do
     expect do
       new_user = create(:user)
-      new_movement = create(:movement, user_id: new_user.id, kind: 'topup', amount: 100_000)
+      new_movement = create(:movement, user_id: new_user.id, amount: 100_000)
       new_movement.update(amount: rand(1.00..100_000.00))
     end.to change(described_class, :count).by(1)
   end
