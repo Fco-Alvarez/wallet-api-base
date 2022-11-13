@@ -41,10 +41,7 @@ RSpec.describe 'movements', type: :request do
       expect(response).to be_successful
     end
 
-    it 'returns values based on scopes' do
-      pending 'pending task'
-      this_should_not_get_executed
-    end
+    it 'returns values based on scopes'
   end
 
   describe 'GET /show' do
