@@ -47,4 +47,55 @@ RSpec.describe User, type: :model do
       expect(new_user).to have_many(:accounts)
     end
   end
+
+  describe 'CRUD accounts' do
+    let(:new_user) { create(:user) }
+
+    it 'creates a user' do
+      expect do
+        create(:user)
+      end.to change(described_class, :count).by(1)
+    end
+
+    it 'updates a user' do
+      update_email = 'test_email@email.com'
+      new_user.update(email: update_email)
+      expect(new_user.email).to match(update_email)
+    end
+
+    it 'destroys a user' do
+      user = new_user
+      expect do
+        user.destroy
+      end.to change(described_class, :count).by(-1)
+    end
+
+    it 'does not create a user if email is already taken' do
+      email = new_user.email
+      expect do
+        create(:user, email: email)
+      end.to raise_error(ActiveRecord::RecordInvalid, 'La validación falló: Email ya está en uso')
+    end
+
+    it 'does not create a user if password is empty' do
+      password = ''
+      expect do
+        create(:user, password: password)
+      end.to raise_error(ActiveRecord::RecordInvalid, 'La validación falló: Password no puede estar en blanco, Password es demasiado corto (6 caracteres mínimo)')
+    end
+
+    it 'validates if user has a rol' do
+      expect(new_user.rol).not_to eq('')
+    end
+
+    it 'validates if user is admin or regular' do
+      expect(new_user.rol).to match('regular').or match('admin')
+    end
+
+    it 'raise error if user is not admin or regular' do
+      expect do
+        create(:user, rol: 'dog')
+      end.to raise_error(ActiveRecord::RecordInvalid, 'La validación falló: Rol dog is not a valid rol')
+    end
+  end
 end
