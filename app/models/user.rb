@@ -18,12 +18,14 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :movements
-  has_many :accounts
+  has_many :accounts, dependent: :destroy
   validates :email, presence: true, uniqueness: true,
                     format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
   validates :rol, inclusion: { in: %w[admin regular],
                                message: '%<value>s is not a valid rol' }
   validates :password, presence: true, length: { minimum: 6 }
+
+  after_create :create_accounts
 
   def account_by_currency(currency)
     accounts.where(currency: currency).first
@@ -39,5 +41,10 @@ class User < ApplicationRecord
     #  movements.by_account(account_id).by_type('payment').sum(:amount)
     account_transactions = accounts.find(account_id).movements
     account_transactions.by_type('topup').pluck(:amount).sum - account_transactions.by_type('payment').pluck(:amount).sum
+  end
+
+  def create_accounts
+    Account.create(user_id: id, currency: 'usd')
+    Account.create(user_id: id, currency: 'ars')
   end
 end

@@ -57,6 +57,11 @@ RSpec.describe User, type: :model do
       end.to change(described_class, :count).by(1)
     end
 
+    it 'creates accounts (ars, usd) when creates a user' do
+      accounts = Account.where(user_id: new_user)
+      expect(accounts.count).to eq(2)
+    end
+
     it 'updates a user' do
       update_email = 'test_email@email.com'
       new_user.update(email: update_email)
@@ -74,14 +79,14 @@ RSpec.describe User, type: :model do
       email = new_user.email
       expect do
         create(:user, email: email)
-      end.to raise_error(ActiveRecord::RecordInvalid, 'La validación falló: Email ya está en uso')
+      end.to raise_error(ActiveRecord::RecordInvalid)
     end
 
     it 'does not create a user if password is empty' do
       password = ''
       expect do
         create(:user, password: password)
-      end.to raise_error(ActiveRecord::RecordInvalid, 'La validación falló: Password no puede estar en blanco, Password es demasiado corto (6 caracteres mínimo)')
+      end.to raise_error(ActiveRecord::RecordInvalid)
     end
 
     it 'validates if user has a rol' do
@@ -95,7 +100,7 @@ RSpec.describe User, type: :model do
     it 'raise error if user is not admin or regular' do
       expect do
         create(:user, rol: 'dog')
-      end.to raise_error(ActiveRecord::RecordInvalid, 'La validación falló: Rol dog is not a valid rol')
+      end.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 end
