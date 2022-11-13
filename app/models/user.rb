@@ -19,9 +19,10 @@ class User < ApplicationRecord
 
   has_many :movements
   has_many :accounts
-  validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
+  validates :email, presence: true, uniqueness: true,
+                    format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
   validates :rol, inclusion: { in: %w[admin regular],
-                               message: '%{value} is not a valid rol' }
+                               message: '%<value>s is not a valid rol' }
   validates :password, presence: true, length: { minimum: 6 }
 
   def account_by_currency(currency)
