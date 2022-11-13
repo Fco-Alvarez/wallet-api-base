@@ -24,7 +24,7 @@ class Account < ApplicationRecord
   has_many :movements
 
   validates :currency, inclusion: { in: %w[usd ars],
-                                    message: '%{value} is not a valid currency' }
+                                    message: '%<value>s is not a valid currency' }
 
   def get_balance
     user.account_difference(id)

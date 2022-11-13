@@ -10,10 +10,10 @@ module Api
       # GET /movements
       def index
         @movements = if @current_user.rol == 'admin'
-                        @pagy, @records = pagy(Movement.all.order(date: :desc))
-                      else
-                        apply_scopes(Movement.where(user_id: @current_user.id).order(date: :desc))
-                      end
+                       @pagy, @records = pagy(Movement.all.order(date: :desc))
+                     else
+                       apply_scopes(Movement.where(user_id: @current_user.id).order(date: :desc))
+                     end
 
         render json: @movements
       end
@@ -58,9 +58,7 @@ module Api
         @movement.kind = 'payment'
         destination_account_id = params[:movement][:destination_account_id]
         destination_account = account_belongs_recipient(destination_account_id)
-        if destination_account
-          @movement.user = destination_account.user
-        end
+        @movement.user = destination_account.user if destination_account
         if @movement.valid?(:money_transfer)
           # @receiving_user = User.find_by(id: @movement.user_id)
           @receiving_user = destination_account.user
@@ -69,7 +67,8 @@ module Api
             account = @movement.account
             # updates accounts
             account.update_column(:total, account.total - @movement.amount.to_f)
-            destination_account.update_column(:total, destination_account.total + @movement.amount.to_f)
+            destination_account.update_column(:total,
+                                              destination_account.total + @movement.amount.to_f)
             Movement.create(
               user: @current_user,
               amount: @movement.amount,
