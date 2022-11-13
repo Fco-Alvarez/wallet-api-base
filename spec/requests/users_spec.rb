@@ -36,9 +36,9 @@ RSpec.describe 'user', type: :request do
     expect(response).to have_http_status(:no_content)
   end
 
-  it "gets user's balance"
-  # it "gets user's balance" do
-  #   get api_v1_balance_url(id: new_user), headers: { Authorization: user_token }, as: :json
-  #   expect(response).to have_http_status(:balance)
-  # end
+  it "gets user's balance" do
+    get api_v1_balance_url(id: new_user, currency: 'ars'), headers: { Authorization: user_token },
+                                                           as: :json
+    expect(response.content_type).to match(a_string_including('application/json'))
+  end
 end
